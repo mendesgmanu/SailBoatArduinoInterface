@@ -1,19 +1,30 @@
 #include <GPS.h>
 
 void GPS::init(ros::NodeHandle* n){
+	Serial.println("Begin GPS");
+	Serial.println(Serial.available());
 	serial.begin(GPS_BAUD_RATE);
+	Serial.println("Baudrate done");
 	gps.begin(GPS_BAUD_RATE);
 	delay(100);
 	gps.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
 	gps.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);
 	gps.sendCommand(PMTK_API_SET_FIX_CTL_1HZ);
 	gps.sendCommand(PGCMD_ANTENNA);
-
+	Serial.println("SET gps COMMANDS");
+	Serial.println(Serial.available());
 	SensorROS::init(n);
+	Serial.println("Initialized SensorROS");
+	Serial.println(Serial.available());
+	Serial.println("Advertising");
+	Serial.println(Serial.available());
 	n->advertise(pubNMEA);
+	Serial.println("Advertised pubNMEA");
 	n->advertise(pubTime);
 
 	nmeaD = "";
+
+	Serial.println("Setup GPS DONE");
 }
 
 void GPS::updateMeasures(){

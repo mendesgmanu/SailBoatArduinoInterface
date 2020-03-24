@@ -3,7 +3,9 @@
 
 #include <config-Sailboat.h>
 
-#ifdef USE_ARDUINO_WIND
+#if defined(USE_ARDUINO_WIND)
+#include <WindSensor.h>
+#elif defined(CUSTOM_WIND_VANE)
 #include <WindSensor.h>
 #else
 #include <WindSensorSubscriber.h>
@@ -15,11 +17,11 @@
 #include <GPSSubscriber.h>
 #endif
 
-#include <XSens.h>
-#include <CMPS12.h>
-#include <JY901IMU.h>
+//#include <XSens.h>
+//#include <CMPS12.h>
+//#include <JY901IMU.h>
+#include <BNO055.h>
 #include <BatterySensor.h>
-
 #include <RCModule.h>
 
 #include <Servo_Motor.h>
@@ -52,8 +54,8 @@ public:
 
 	WindSensor* getWindSensor(){return (WindSensor*)sensors[SENSOR_WINDSENSOR];}
 	GPS* getGPS(){return (GPS*)sensors[SENSOR_GPS];}
-	IMU* getIMU(){return (XSens*)sensors[SENSOR_IMU];}
-  BatterySensor* getBattery(){return (BatterySensor*)sensors[SENSOR_BATTERY];}
+	IMU* getIMU(){return (BNO055*)sensors[SENSOR_IMU];}
+  	BatterySensor* getBattery(){return (BatterySensor*)sensors[SENSOR_BATTERY];}
 
 	RC* getRC(){return (RC*)sens[SENSOR_RC];}
 

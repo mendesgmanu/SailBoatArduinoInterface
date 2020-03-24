@@ -86,7 +86,9 @@ void Sailboat::msgCallback(const std_msgs::String& msg){
 }
 
 void Sailboat::init(ros::NodeHandle* n){
+
     Wire.begin();
+
 
 #ifdef USE_ARDUINO_WIND
 #pragma message("Using Wind Sensor on Arduino")
@@ -95,6 +97,7 @@ void Sailboat::init(ros::NodeHandle* n){
 #pragma message("Attach Wind Sensor on RPI")
     sensors[SENSOR_WINDSENSOR] = new WindSensor();
 #endif
+
 
 #ifdef USE_ARDUINO_GPS
 #pragma message("Using GPS on Arduino")
@@ -109,6 +112,8 @@ void Sailboat::init(ros::NodeHandle* n){
   sensors[SENSOR_GPS] = new GPS();
 #endif
 
+Serial.print("GPS SENSORS CONFIGURED");
+
 #if defined(XSENS_IMU)
 	#pragma message("XSENS is used as IMU")
   sensors[SENSOR_IMU] = new XSens();
@@ -120,7 +125,6 @@ void Sailboat::init(ros::NodeHandle* n){
 	sensors[SENSOR_IMU] = new JY901IMU();
 #endif
   sensors[SENSOR_BATTERY] = new BatterySensor();
-
   sens[SENSOR_RC] = new RC();
 #ifdef SERVO_SHIELD
 	#pragma message("Servo Shield from Adafruit is used")
@@ -142,9 +146,13 @@ void Sailboat::init(ros::NodeHandle* n){
 #endif
 #endif
 
-    for(int i = 0; i < NB_SENSORS; ++i)
-        sensors[i]->init(n);
 
+	Serial.println("Initializing Sensors");
+    for(int i = 0; i < NB_SENSORS; ++i){
+	Serial.println("Init Sensors no. " + (String)i);
+        sensors[i]->init(n);
+}
+	Serial.println("Initializing Actuators");
     for(int i = 0; i < NB_ACTUATORS; ++i)
         actuators[i]->init(n);
 
@@ -153,6 +161,8 @@ void Sailboat::init(ros::NodeHandle* n){
 
     n->advertise(pubMsg);
     n->advertise(pubMode);
+
+Serial.println("Finished Sailboat INIT");
 }
 
 void Sailboat::publishMsg(String msg){

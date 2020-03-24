@@ -9,7 +9,8 @@
 class WindSensor : public SensorROS{
 	public:
 		WindSensor() : SensorROS("wind", &msg), angle(0), windSpeed(0), anemometerRevolution(0), contactBounceTime(0), timeAnemometer(0), kf(5,5,0.08){}
-		void init();
+		virtual void init(ros::NodeHandle* n){SensorROS::init(n);initialiseWindSensor();}
+		void initialiseWindSensor();
 		void updateMeasures();
 		void updateTest();
 		void communicateData();

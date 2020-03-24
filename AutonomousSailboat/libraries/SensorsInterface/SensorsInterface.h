@@ -33,7 +33,9 @@ class SensorROS : public Sensor{
 		SensorROS(const char* name, ros::Msg* msg, unsigned long period = 100, unsigned long comperiod = 100) : Sensor(period), pub(name, msg), nh(NULL), comperiod(comperiod), comTimer(0){}
 		
 		void init(){}
-		virtual void init(ros::NodeHandle* n){n->advertise(pub); nh = n;}
+		virtual void init(ros::NodeHandle* n){
+		Serial.println("Init node");		
+		n->advertise(pub); nh = n;}
 		void communicate(){if(millis() - comTimer > comperiod){communicateData(); comTimer = millis();}}
 		virtual void communicateData() = 0;
 	protected:

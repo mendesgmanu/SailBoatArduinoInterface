@@ -13,12 +13,13 @@
 #define RC_5 4
 #define RC_6 5
 
-#define RC_PIN_1 A8
-#define RC_PIN_2 A9
-#define RC_PIN_3 A10
-#define RC_PIN_4 A11
-#define RC_PIN_5 A12
-#define RC_PIN_6 A13
+//#define RC_PIN_1 A8
+#define RC_PIN_1 A9
+#define RC_PIN_2 A11
+#define RC_PIN_3 A2
+#define RC_PIN_4 A15
+#define RC_PIN_5 A6
+#define RC_PIN_6 A0
 
 //RC Config
 #ifdef FLYSKY
@@ -79,6 +80,27 @@
 #define RC_RUDDER	RC_1
 #define RC_SAIL		RC_3
 #define RC_AUTO		RC_2
+#endif
+
+//Our transmitter
+#ifdef TARANIS_Q_X7
+#define RC_NUM_CHANNELS 4
+#define RC_1_MIN    991
+#define RC_1_MAX    2005
+#define RC_2_MIN    990
+#define RC_2_MAX    1930
+#define RC_3_MIN    983
+#define RC_3_MAX    2001
+#define RC_4_MIN    912
+#define RC_4_MAX    1940
+#define RC_5_MIN    983
+#define RC_5_MAX    1999
+#define RC_6_MIN    983
+#define RC_6_MAX    1999
+
+#define RC_RUDDER	RC_1
+#define RC_SAIL		RC_2
+#define RC_AUTO		RC_3
 #endif
 
 #endif

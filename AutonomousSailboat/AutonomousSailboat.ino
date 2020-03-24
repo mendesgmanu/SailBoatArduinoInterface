@@ -1,3 +1,5 @@
+#include <BNO055.h>
+
 #include <Sailboat.h>
 #include <Log.h>
 #include "ReturnHome.h"
@@ -112,18 +114,23 @@ bool checkIfColdStart() {
 
 void setup() {
   Logger::Instance()->MessagesSetup();
-
+  Serial.begin(115200);
+  Serial.println("Debug mode");
   nh.getHardware()->setBaud(115200);
   nh.initNode();
   nh.subscribe(sub);
   nh.subscribe(sub2);
 
+  Serial.println("Runnint init");
   Sailboat::Instance()->init(&nh);
+  Serial.println("Done init");
+
   delay(100);
   
   setControllers();
   setRCInterrupts();
 
+  Serial.println("Set Controllers and RCINtterups");
 #ifdef WIND_ANEMOMETER_PIN
   attachInterrupt(digitalPinToInterrupt(WIND_ANEMOMETER_PIN), AnemometerReading, FALLING);
 #endif
@@ -147,7 +154,7 @@ void setup() {
 
   if (LOGGER)
     Logger::Instance()->Toast("Sailboat is", "Ready!!", 0);
-  //Sailboat::Instance()->publishMsg(String("Sailboat is Ready! Version : ") + String(VERSION_ARDUINO));
+  Sailboat::Instance()->publishMsg(String("Sailboat is Ready! Version : ") + String(VERSION_ARDUINO));
 }
 
 void loop() {
